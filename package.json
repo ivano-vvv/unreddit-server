@@ -1,18 +1,40 @@
 {
-  "name": "unreddit-server",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node src/index.ts"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@types/node": "^14.11.2",
-    "ts-node": "^9.0.0",
-    "typescript": "^4.0.3"
-  }
+    "name": "unreddit-server",
+    "version": "0.0.1",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "nodemon dist/index.js",
+        "watch": "tsc -w"
+    },
+    "keywords": [],
+    "author": "Vladislav Ivanov <ivanovlad2010@gmail.com>",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/node": "^14.11.2",
+        "@typescript-eslint/eslint-plugin": "^4.9.0",
+        "@typescript-eslint/parser": "^4.9.0",
+        "eslint": "^7.15.0",
+        "eslint-config-prettier": "^6.15.0",
+        "eslint-plugin-prettier": "^3.2.0",
+        "nodemon": "^2.0.6",
+        "prettier": "^2.2.1",
+        "ts-node": "^9.0.0",
+        "typescript": "^4.0.3"
+    },
+    "dependencies": {
+        "@mikro-orm/cli": "^4.3.3",
+        "@mikro-orm/core": "^4.3.3",
+        "@mikro-orm/migrations": "^4.3.3",
+        "@mikro-orm/postgresql": "^4.3.3",
+        "pg": "^8.5.1"
+    },
+    "mikro-orm": {
+        "useTsNode": true,
+        "configPaths": [
+            "./src/mikro-orm.config.ts",
+            "./dist/mikro-orm.config.js"
+        ]
+    },
+    "repository": "https://github.com/ivano-vvv/unreddit-server.git"
 }
