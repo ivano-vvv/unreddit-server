@@ -5,7 +5,8 @@
     "main": "index.js",
     "scripts": {
         "start": "nodemon dist/index.js",
-        "watch": "tsc -w"
+        "watch": "tsc -w",
+        "create:migration": "mikro-orm migration:create"
     },
     "keywords": [],
     "author": "Vladislav Ivanov <ivanovlad2010@gmail.com>",
@@ -29,6 +30,7 @@
         "@mikro-orm/migrations": "^4.3.3",
         "@mikro-orm/postgresql": "^4.3.3",
         "apollo-server-express": "^2.19.1",
+        "argon2": "^0.27.1",
         "express": "^4.17.1",
         "graphql": "^15.4.0",
         "pg": "^8.5.1",
