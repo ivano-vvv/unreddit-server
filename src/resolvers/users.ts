@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { User } from '../entities/User';
-import { Resolver, Ctx, Arg, Mutation, InputType, Field, ObjectType } from 'type-graphql';
+import { Resolver, Ctx, Arg, Mutation, InputType, Field, ObjectType, Query } from 'type-graphql';
 import { OrmContext } from '../types';
 import argon2 from 'argon2';
 
@@ -33,8 +33,18 @@ class UserResponse {
 
 @Resolver()
 export class UserResolver {
+    @Query(() => User, { nullable: true })
+    async me(@Ctx() { em, req }: OrmContext) {
+        if (!req.session.userId) {
+            return null;
+        }
+
+        const user = await em.findOne(User, { id: req.session.userId });
+        return user;
+    }
+
     @Mutation(() => UserResponse)
-    async signUp(@Arg('signUpData') data: SigningInput, @Ctx() { em }: OrmContext): Promise<UserResponse> {
+    async signUp(@Arg('signUpData') data: SigningInput, @Ctx() { em, req }: OrmContext): Promise<UserResponse> {
         const { username, password } = data;
 
         const errors: UserResponse['errors'] = [];
@@ -76,11 +86,13 @@ export class UserResolver {
 
         await em.persistAndFlush(user);
 
+        req.session.userId = user.id;
+
         return { user };
     }
 
     @Mutation(() => UserResponse)
-    async signIn(@Arg('signInData') data: SigningInput, @Ctx() { em }: OrmContext): Promise<UserResponse> {
+    async signIn(@Arg('signInData') data: SigningInput, @Ctx() { em, req }: OrmContext): Promise<UserResponse> {
         const { username, password } = data;
 
         const user = await em.findOne(User, { username });
@@ -108,6 +120,8 @@ export class UserResolver {
                 ],
             };
         }
+
+        req.session.userId = user.id;
 
         return { user };
     }
