@@ -67,7 +67,7 @@ export class UserResolver {
             return { errors };
         }
 
-        const existedUser = em.findOne(User, { username });
+        const existedUser = await em.findOne(User, { username });
 
         if (existedUser) {
             errors.push({
