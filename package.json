@@ -4,6 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
+        "postinstall": "yarn create:migration",
         "start": "nodemon dist/index.js",
         "watch": "tsc -w",
         "create:migration": "mikro-orm migration:create"
